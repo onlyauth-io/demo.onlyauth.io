@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyAuth Demo - MyAwesomeCo Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .navbar h1 a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 50px;
+        }
+
+        .content,
+        .login-box-wrapper {
+            width: 48%;
+        }
+
+        .content-header {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .login-box {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .login-box h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .form-control label {
+            display: block;
+            color: #666;
+        }
+
+        .form-control input {
+            box-sizing: border-box;
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .form-control input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-control input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .small-text {
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #app-config {
+            display: none;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #5bc0de;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #31b0d5;
+            text-decoration: underline;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .content,
+            .login-box-wrapper {
+                width: 100%;
+            }
+
+            .login-box,
+            #app-config {
+                width: calc(100% - 40px);
+                /* account for padding */
+            }
+
+            .form-control input {
+                width: calc(100% - 20px);
+
+            }
+        }
+    </style>
+    <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/pretty-print-json@2.0/dist/css/pretty-print-json.css>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h1><a href="https://demo.onlyauth.io">MyAwesomeCo</a></h1>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h2 class="content-header">Practical Demo Information</h2>
+            <p>Since the username/password is handled by your backend (or in MyAwesomeCo&apos;s backend), you can enter
+                anything in those fields.</p>
+
+            <p>All data on the API/widget are deleted after <span style="font-weight: bold;">60 minutes</span>.
+                Additionally, there are limits in place only for the demo.</p>
+
+            <p><a href="#" id="toggle-config">MyAwesomeCo's OnlyAuth App config</a></p>
+
+            <pre id="app-config">
+
+            </pre>
+
+            <p>Ready to start building? Or want more information? <a
+                    href="https://www.onlyauth.io/product">https://www.onlyauth.io/product</a></p>
+
+        </div>
+
+        <div class="login-box-wrapper">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form method="post" action="/">
+                    <div class="form-control">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Username (whatever goes for the demo)">
+                    </div>
+                    <div class="form-control">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Password (whatever goes for the demo)">
+                    </div>
+                    <div class="form-control">
+                        <label for="phone_number_no_cc">User&apos;s Phone Number</label> <span class="small-text">(this
+                            is provided by the
+                            app or website's database, but we put here for an easier demo experience)</span><br />
+                        <input type="tel" id="phone_number_no_cc" name="phone_number_no_cc" placeholder="4151002000">
+                    </div>
+                    <div class="form-control">
+                        <label for="user_id">User ID</label> <span class="small-text">(this also is provided by the app;
+                            an end-user may have more than one account in a single service)</span>
+                        <input type="text" id="user_id" name="user_id" value="1">
+                    </div>
+                    <div class="form-control">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 OnlyAuth Technologies SL. All rights reserved. Demo uses <a
+                href="https://github.com/center-key/pretty-print-json/tree/main">pretty-print-json</a> Copyright &copy;
+            2018-2024 Individual contributors
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById("phone_number_no_cc");
+
+            window.intlTelInput(input, {
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                separateDialCode: true,
+                preferredCountries: ["us", "es", "gb"]
+            });
+            const iti = window.intlTelInputGlobals.getInstance(input);
+            const phoneNumberInput = document.getElementById('phone_number_no_cc');
+
+            function validatePhoneForE164(phoneNumber) {
+                const regEx = /^\+[1-9]\d{10,14}$/;
+                return regEx.test(phoneNumber);
+            };
+
+
+            function toggleConfigDisplay() {
+                var appConfig = document.getElementById('app-config');
+                if (appConfig.style.display === 'none') {
+                    const configJson = {
+                        "allowed_channels": ["push", "android-biometrics", "apple-faceid", "security-key", "sms"],
+                        "defer_sms_usage": true,
+                        "backup_codes_enrollment": false,
+                        "mfa_enabled": false,
+                        "intelligent_2fa": false,
+                        "app_name": "MySuperAwesomeCo",
+                        "language": "en-us",
+                        "redirect_uri": "https://example.com/account",
+                        "app_id": "APPX-123456789",
+                        "sandbox_mode": true
+
+                    };
+                    appConfig.innerHTML = prettyPrintJson.toHtml(configJson);
+                    appConfig.style.display = 'block';
+                } else {
+                    appConfig.style.display = 'none';
+                }
+            }
+
+            document.getElementById('toggle-config').addEventListener('click', function (event) {
+                event.preventDefault();
+                toggleConfigDisplay();
+            });
+
+            document.querySelector('.login-box form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                var phoneNumberInput = document.getElementById("phone_number_no_cc");
+
+                const iti = window.intlTelInputGlobals.getInstance(phoneNumberInput);
+                if (!iti.isPossibleNumber(phoneNumberInput)) {
+                    alert('Please enter a valid phone number')
+                    return;
+                }
+
+                const numberWithCountryCode = iti.getNumber(intlTelInputUtils.numberFormat.E164)
+                var phoneNumberWithCountryCode = document.createElement("input");
+                phoneNumberWithCountryCode.setAttribute("type", "hidden");
+                phoneNumberWithCountryCode.setAttribute("name", "phone_number");
+                phoneNumberWithCountryCode.setAttribute("id", "phone_number");
+                phoneNumberWithCountryCode.setAttribute("value", numberWithCountryCode);
+                this.appendChild(phoneNumberWithCountryCode);
+
+                this.submit();
+            });
+        });
+
+
+    </script>
+    <script src=https://cdn.jsdelivr.net/npm/pretty-print-json@2.0/dist/pretty-print-json.min.js></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+</body>
+
+</html>
